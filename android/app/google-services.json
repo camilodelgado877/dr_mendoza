@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "154192929027",
+    "project_id": "notas-a17fc",
+    "storage_bucket": "notas-a17fc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:154192929027:android:8b28e49918ed4f2a198936",
+        "android_client_info": {
+          "package_name": "com.example.dr_mendoza"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "154192929027-i64vhra9knouvcmnqhhmm892arikmp7k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbG1uO0xJVNX37DShmdPRqnl5Rk0Q85L4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "154192929027-i64vhra9knouvcmnqhhmm892arikmp7k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,16 +1,44 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dr_mendoza/services/appstate.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:dr_mendoza/models/nota.dart';
+import 'package:provider/provider.dart';
 
-class notas_page extends StatelessWidget {
-  notas_page({super.key});
-  List<Nota> misNotas = [
-    Nota(titulo: 'Titulo 1', contenido: 'contenido de la nota número 1'),
-    Nota(titulo: 'Titulo 2', contenido: 'contenido de la nota 2'),
-  ];
+import '../models/UserServices.dart';
+
+class homeNotas extends StatefulWidget{
+  const homeNotas({Key? key}) : super(key: key);
+
+  @override
+  State<homeNotas> createState() => notas_page();
+}
+class notas_page extends  State<homeNotas>{
+  List <Nota> misNotas =[];
   final TextEditingController _tituloController = TextEditingController();
-  final TextEditingController _contenidoCtroller = TextEditingController();
+  final TextEditingController _contenidoController = TextEditingController();
+  final firebase=FirebaseFirestore.instance;
 
+   /*validarDatos() async{
+    try{
+      CollectionReference ref= FirebaseFirestore.instance.collection('Notas');
+      QuerySnapshot notas = await ref.get();
+
+
+      if(notas.docs.length !=0){
+        for(var cursor in notas.docs){
+          misNotas.add(Nota(titulo:cursor.get('titulo'), contenido: cursor.get('contenido')));
+        }
+
+      }else{
+        print('no hay documentos en la colección');
+      }
+
+    }catch(e){
+      print('Error....'+e.toString());
+    }
+  }
+  */
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -95,6 +123,9 @@ class notas_page extends StatelessWidget {
             ),
             appBar: AppBar(
               title: const Text('Notas'),
+              actions: [IconButton(onPressed: (){ setState(() {
+                
+              });}, icon: const Icon(Icons.refresh),),],
             ),
             backgroundColor: Colors.white,
             floatingActionButton: FloatingActionButton(
@@ -107,15 +138,21 @@ class notas_page extends StatelessWidget {
               },
               child: const Icon(Icons.add),
             ),
-            body: ListView(
-              children: [
-                for (Nota nota in misNotas)
-                  ListTile(
-                    title: Text(nota.titulo!),
-                    subtitle: Text(nota.contenido!),
-                  )
-              ],
-            ))
+            body: FutureBuilder(
+              future: UserServices().getNotas(),
+              builder: (BuildContext context, AsyncSnapshot<List> snapshot){
+                List misNotas = snapshot.data ??[];
+                return ListView(
+                  children: [
+                    for(Nota nota in misNotas)
+                      ListTile(
+                        title: Text(nota.titulo),
+                        subtitle: Text(nota.contenido),
+                      )
+                  ],
+                );
+              },)
+            )
       ],
     );
   }
@@ -125,6 +162,7 @@ class ModalNuevaNota extends StatefulWidget {
   const ModalNuevaNota({
     Key? key,
   }) : super(key: key);
+  
 
   @override
   State<ModalNuevaNota> createState() => _ModalNuevaNotaState();
@@ -134,7 +172,21 @@ class _ModalNuevaNotaState extends State<ModalNuevaNota> {
   final TextEditingController _tituloController = TextEditingController();
 
   final TextEditingController _contenidoController = TextEditingController();
+  late CollectionReference notesRef;
+  final firebase=FirebaseFirestore.instance;
+  registroNotas() async{
+    try{
+      await firebase.collection('Notas').doc().set(
+        {
+          'titulo': _tituloController.text,
+          'contenido': _contenidoController.text,
 
+        }
+      );
+    }catch (e){
+      print("error"+e.toString());
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -158,7 +210,9 @@ class _ModalNuevaNotaState extends State<ModalNuevaNota> {
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context);
+                    registroNotas();
                     ScaffoldMessenger.of(context).showSnackBar(
+                      
                         SnackBar(content: Text('Nota Agregada correctamente')));
                   },
                   child: const Text('Aceptar'),
@@ -184,4 +238,5 @@ class _ModalNuevaNotaState extends State<ModalNuevaNota> {
     _tituloController.dispose();
     super.dispose();
   }
+
 }

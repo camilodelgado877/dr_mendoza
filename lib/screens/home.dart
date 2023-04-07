@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -66,10 +65,10 @@ class Home extends StatelessWidget {
                       color: Colors.grey[100],
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, 'metas_page');
+                          Navigator.pushNamed(context, 'Cocina_page');
                         },
                         child: const Text(
-                          "Metas",
+                          "Cocina",
                           style: TextStyle(fontSize: 20),
                         )
                         ),

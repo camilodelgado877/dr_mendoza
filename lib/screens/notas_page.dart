@@ -3,7 +3,6 @@ import 'package:dr_mendoza/services/appstate.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:dr_mendoza/models/nota.dart';
-import 'package:provider/provider.dart';
 
 import '../models/UserServices.dart';
 
@@ -19,7 +18,7 @@ class notas_page extends  State<homeNotas>{
   final TextEditingController _contenidoController = TextEditingController();
   final firebase=FirebaseFirestore.instance;
 
-   /*validarDatos() async{
+   validarDatos() async{
     try{
       CollectionReference ref= FirebaseFirestore.instance.collection('Notas');
       QuerySnapshot notas = await ref.get();
@@ -38,7 +37,6 @@ class notas_page extends  State<homeNotas>{
       print('Error....'+e.toString());
     }
   }
-  */
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -96,10 +94,10 @@ class notas_page extends  State<homeNotas>{
                       color: Colors.grey[100],
                       child: GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, 'metas_page');
+                            Navigator.pushNamed(context, 'Cocina_page');
                           },
                           child: const Text(
-                            "Metas",
+                            "Cocina",
                             style: TextStyle(fontSize: 20),
                           )),
                     ),

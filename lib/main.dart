@@ -1,10 +1,9 @@
-import 'package:dr_mendoza/services/appstate.dart';
 import 'package:flutter/material.dart';
 import 'package:dr_mendoza/screens/screens.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:dr_mendoza/firebase_options.dart';
-import 'package:provider/provider.dart';
 void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
 );
@@ -18,9 +17,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (BuildContext context) =>AppState(),
-      child: MaterialApp(
+    return MaterialApp(
       title: 'Agenda personal',
       theme: ThemeData(
         // This is the theme of your application.
@@ -39,10 +36,9 @@ class MyApp extends StatelessWidget {
         '/':(context) => const Home(),
         'pageHorario':(context) => const PageHorario(),
         'notas_page':(context) =>  const homeNotas(),
-        'metas_page':(context) => const metas_page(),
+        'Cocina_page':(context) => const Cocina_page(),
         'mensajes_page':(context) => const mensajes_page(),
       },
-    ),
     );
   }
 }

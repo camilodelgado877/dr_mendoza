@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 
-class metas_page extends StatelessWidget {
-  const metas_page({super.key});
+class Cocina_page extends StatelessWidget {
+  const Cocina_page({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -66,10 +66,10 @@ class metas_page extends StatelessWidget {
                       color: Colors.grey[100],
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, 'metas_page');
+                          Navigator.pushNamed(context, 'Cocina_page');
                         },
                         child: const Text(
-                          "Metas",
+                          "Cocina",
                           style: TextStyle(fontSize: 20),
                         )
                         ),

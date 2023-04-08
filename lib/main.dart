@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         '/':(context) => const Home(),
         'pageHorario':(context) => const PageHorario(),
         'notas_page':(context) =>  const homeNotas(),
-        'Cocina_page':(context) => const Cocina_page(),
+        'Cocina_page':(context) => Cocina_page(),
         'mensajes_page':(context) => const mensajes_page(),
       },
     );

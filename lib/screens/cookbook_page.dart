@@ -1,8 +1,31 @@
+import 'package:dr_mendoza/screens/recipe_card.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 
-class Cocina_page extends StatelessWidget {
-  const Cocina_page({super.key});
+import '../models/recipe.api.dart';
+import '../models/recipe.dart';
+
+class Cocina_page extends StatefulWidget {
+  Cocina_page({super.key});
+  Cocina_PageState createState() => Cocina_PageState();
+}
+class Cocina_PageState extends State<Cocina_page>{
+
+  List<Recipe> recipes = [];
+  bool _isLoading = true;
+
+  @override
+  void initState(){
+    super.initState(); 
+    getRecipes();
+  }
+
+  Future<void> getRecipes() async{
+    recipes = await RecipeApi.getRecipe();
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,29 +116,19 @@ class Cocina_page extends StatelessWidget {
             ),
           ),
           appBar: AppBar(
-            title: const Text('Dra. Mendoza'),
+            title: Row(children: [
+              Icon(Icons.restaurant_menu),
+              SizedBox(width: 10,),
+              Text('Libro de cocina'),
+            ] ,
           ),
-          backgroundColor: Colors.transparent,
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: size.height * 0.45,
-                ),
-                SizedBox(
-                  width: size.width * 0.7,
-                  child: const Text(
-                    'MAPA',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 100,
-                        fontWeight: FontWeight.bold),
-                  ),
-                )
-              ],
-            ),
           ),
+          body: _isLoading ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+            itemCount: recipes.length,
+            itemBuilder: (context, index){
+              return RecipeCard(title: recipes[index].name, cookTime: recipes[index].totalTime, rating: recipes[index].rating.toString(), thumbnailUrl: recipes[index].images);
+            },)
         )
       ],
     );
